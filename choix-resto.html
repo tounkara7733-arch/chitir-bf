@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Choix du restaurant - Chitir</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: radial-gradient(circle at top, #ffd194, #d1913c, #f83600);
+      color: #222;
+      max-width: 500px;
+      margin: auto;
+      min-height: 100vh;
+      padding: 0 0 30px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.4);
+      border-radius: 0 0 20px 20px;
+      overflow-x: hidden;
+    }
+    .header {
+      position: sticky;
+      top: 0;
+      background: linear-gradient(90deg, #ff3b30, #ff9500);
+      display: flex;
+      align-items: center;
+      padding: 10px 15px;
+      color: #fff;
+      z-index: 100;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.4);
+    }
+    .back-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      border: none;
+      background: rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+      cursor: pointer;
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      transition: all 0.2s;
+    }
+    .back-btn:hover { transform: scale(1.05); }
+    .header-title {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    main { padding: 20px 16px 10px; }
+    .title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+    .subtitle {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 24px;
+    }
+    .card-list { display: flex; flex-direction: column; gap: 14px; }
+    .resto-card {
+      background: rgba(255,255,255,0.96);
+      border-radius: 18px;
+      padding: 16px 16px 14px;
+      box-shadow: 0 14px 30px rgba(0,0,0,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+    .resto-card::before {
+      content: "";
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,149,0,0.4), transparent);
+    }
+    .resto-card:hover, .resto-card:active {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+    }
+    .resto-left { display: flex; align-items: center; gap: 12px; }
+    .resto-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #ff9500, #ff3b30);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      box-shadow: 0 8px 16px rgba(255,149,0,0.6);
+      font-size: 1.1rem;
+    }
+    .resto-text h3 { 
+      margin: 0; 
+      font-size: 1.05rem; 
+      color: #222;
+      font-weight: 700;
+    }
+    .resto-text p { 
+      margin: 2px 0 0; 
+      font-size: 0.8rem; 
+      color: #777; 
+    }
+    .resto-right { text-align: right; }
+    .resto-tag {
+      font-size: 0.72rem;
+      background: rgba(255,149,0,0.1);
+      color: #ff3b30;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      display: inline-block;
+      box-shadow: 0 2px 8px rgba(255,149,0,0.2);
+    }
+    .resto-whatsapp {
+      font-size: 0.82rem;
+      color: #25d366;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      justify-content: flex-end;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <button class="back-btn" onclick="goBack()">
+      <i class="fa-solid fa-arrow-left"></i>
+    </button>
+    <div class="header-title">Étape 2 · Choix du restaurant</div>
+  </header>
+
+  <main>
+    <div class="title">Où veux-tu commander ?</div>
+    <div class="subtitle">Choisis le restaurant Chitir qui va recevoir ta commande WhatsApp.</div>
+
+    <div class="card-list">
+      <div class="resto-card" onclick="choisirResto('Chitir Chicken Ouaga')">
+        <div class="resto-left">
+          <div class="resto-icon">
+            <i class="fa-solid fa-store"></i>
+          </div>
+          <div class="resto-text">
+            <h3>Chitir Chicken Ouaga</h3>
+            <p>Centre-ville · Livraison rapide</p>
+          </div>
+        </div>
+        <div class="resto-right">
+          <div class="resto-tag">Principal</div>
+          <div class="resto-whatsapp">
+            <i class="fa-brands fa-whatsapp"></i>
+            WhatsApp direct
+          </div>
+        </div>
+      </div>
+
+      <div class="resto-card" onclick="choisirResto('Chitir Chicken Kamsonghin')">
+        <div class="resto-left">
+          <div class="resto-icon">
+            <i class="fa-solid fa-location-dot"></i>
+          </div>
+          <div class="resto-text">
+            <h3>Chitir Chicken Kamsonghin</h3>
+            <p>Quartier Kamsonghin · Proche de chez vous</p>
+          </div>
+        </div>
+        <div class="resto-right">
+          <div class="resto-tag">Point Chitir</div>
+          <div class="resto-whatsapp">
+            <i class="fa-brands fa-whatsapp"></i>
+            WhatsApp direct
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const WHATSAPP_CHITIR = "8616679056754"; // +86 16679056754
+
+    function goBack() {
+      window.location.href = "infos-client.html";
+    }
+
+    function choisirResto(resto) {
+      const info = JSON.parse(localStorage.getItem("chitir_checkout_info") || "{}");
+      const panier = JSON.parse(localStorage.getItem("panier") || "[]");
+      const cmdId = localStorage.getItem("chitir_current_cmd") || "N/A";
+
+      if (!panier.length) {
+        alert("Panier vide !");
+        window.location.href = "panier.html";
+        return;
+      }
+
+      const lignes = panier.map(
+        item => `• ${item.nom} x${item.quantite} = ${(item.prix * item.quantite).toLocaleString()} FCFA`
+      ).join("\n");
+
+      const total = panier.reduce((sum, item) => sum + item.prix * item.quantite, 0);
+
+      const message = `🍗 *CHITIR CHICKEN - COMMANDE #${cmdId}*\n\n` +
+        `🏪 Restaurant : ${resto}\n\n` +
+        `👤 ${info.nom}\n` +
+        `📱 ${info.phone}\n` +
+        `📍 ${info.localisation}\n\n` +
+        `📋 *${panier.length} article(s)*\n` +
+        `${lignes}\n\n` +
+        `💰 *TOTAL : ${total.toLocaleString()} FCFA*\n\n` +
+        `━━━━━━━━━━━━━━━━━━━\n` +
+        `🎯 *CHOISISSEZ VOTRE PAIEMENT :*\n` +
+        `1️⃣ *PAIEMENT À LA LIVRAISON* (payer le livreur)\n` +
+        `2️⃣ *PAIEMENT MOBILE*\n\n` +
+        `📲 *Détails paiement mobile :*\n` +
+        `🔸 *ORANGE MONEY* : 123456\n` +
+        `🔸 *TELECEL MONEY* : 123654\n` +
+        `🔸 *WAVE MONEY* : 789456\n\n` +
+        `⚡ Répondez :\n` +
+        `*1* pour paiement à la livraison\n` +
+        `*2* + nom opérateur (Orange/Telecel/Wave)`;
+
+      const url = `https://wa.me/+${WHATSAPP_CHITIR}?text=${encodeURIComponent(message)}`;
+      window.open(url, '_blank');
+      
+      // Nettoie panier et retourne au menu principal
+      localStorage.removeItem("panier");
+      localStorage.removeItem("chitir_checkout_info");
+      localStorage.removeItem("chitir_current_cmd");
+      setTimeout(() => window.location.href = "index.html", 1500);
+    }
+  </script>
+</body>
+</html>

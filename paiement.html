@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Paiement - Chitir Chicken</title>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      text-align: center;
+      background-color: #f8f9fc;
+      color: #222;
+      padding: 20px;
+      margin: 0;
+    }
+
+    .container {
+      max-width: 440px;
+      margin: 60px auto;
+      background: white;
+      border-radius: 22px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+      padding: 25px;
+      animation: fadeIn 0.6s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      color: orange;
+      margin-bottom: 15px;
+      font-size: 1.5rem;
+      text-shadow: 0 0 8px rgba(255,165,0,0.4);
+    }
+
+    p {
+      color: #555;
+      font-size: 1rem;
+    }
+
+    img.qr {
+      width: 240px;
+      height: 240px;
+      margin: 20px 0;
+      border: 3px solid orange;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(255,165,0,0.5);
+    }
+
+    .code {
+      background: #fff3e0;
+      padding: 8px 14px;
+      border-radius: 12px;
+      display: inline-block;
+      font-weight: 600;
+      color: #ff6600;
+      letter-spacing: 1px;
+      box-shadow: inset 0 0 6px rgba(255,165,0,0.3);
+    }
+
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 25px;
+    }
+
+    button {
+      background: linear-gradient(90deg, #ff3b30, #ff9500);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 13px 25px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(255,69,0,0.3);
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    .livraison {
+      background: linear-gradient(90deg, #555, #999);
+    }
+
+    #sectionPaiement {
+      display: none;
+      margin-top: 25px;
+      animation: fadeIn 0.6s ease;
+    }
+
+    .next-btn {
+      background: linear-gradient(90deg, #4CAF50, #8BC34A);
+      margin-top: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>💳 Choisissez votre mode de paiement</h1>
+    <p>Veuillez sélectionner comment vous souhaitez régler votre commande.</p>
+
+    <div class="buttons">
+      <button onclick="payerMaintenant()">🔸 Payer maintenant</button>
+      <button class="livraison" onclick="payerLivraison()">🚚 Payer à la livraison</button>
+    </div>
+
+    <div id="sectionPaiement">
+      <h2>Scannez pour payer avec Max it</h2>
+      <img src="images/qrmaxit.png" alt="QR Code Max it" class="qr">
+      <p>Code marchand :</p>
+      <p class="code">123456789</p>
+      <p style="color:#555; margin-top:10px;">Une fois le paiement effectué, cliquez sur le bouton ci-dessous 👇</p>
+      <button class="next-btn" onclick="continuerWhatsApp()">➡️ Continuer vers WhatsApp</button>
+    </div>
+  </div>
+
+  <script>
+    // ✅ Remplace par TON numéro WhatsApp (sans + ni espaces)
+    const whatsappNumber = "22670000000";
+
+    let modePaiement = "";
+
+    // 🔸 Fonction pour récupérer les infos du panier
+    function getPanierMessage() {
+      const panier = JSON.parse(localStorage.getItem("panier")) || [];
+      if (panier.length === 0) return "Aucun article dans le panier.";
+
+      let message = "🛍️ *Commande Chitir Chicken :*\n\n";
+      panier.forEach(p => {
+        message += `🍗 ${p.nom} — ${p.prix} FCFA x${p.quantite}\n`;
+      });
+      const total = panier.reduce((s, p) => s + p.prix * p.quantite, 0);
+      message += `\n💰 *Total : ${total} FCFA*\n`;
+      return message;
+    }
+
+    // 🚚 Paiement à la livraison
+    function payerLivraison() {
+      modePaiement = "livraison";
+      envoyerMessageWhatsApp(false);
+    }
+
+    // 💳 Payer maintenant
+    function payerMaintenant() {
+      modePaiement = "maintenant";
+      document.getElementById("sectionPaiement").style.display = "block";
+      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+    }
+
+    // ✅ Bouton "Continuer vers WhatsApp" après paiement
+    function continuerWhatsApp() {
+      if (modePaiement === "maintenant") {
+        envoyerMessageWhatsApp(true);
+      }
+    }
+
+    // 🔁 Envoi vers WhatsApp
+    function envoyerMessageWhatsApp(paye) {
+      let message = getPanierMessage();
+      if (paye) {
+        message += "\n✅ *Paiement effectué via Max it*";
+      } else {
+        message += "\n🚚 *Paiement non effectué (à la livraison)*";
+      }
+
+      const encoded = encodeURIComponent(message);
+      window.location.href = `https://wa.me/${whatsappNumber}?text=${encoded}`;
+    }
+  </script>
+</body>
+</html>

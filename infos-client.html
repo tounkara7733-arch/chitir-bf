@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Infos client - Chitir Chicken</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: radial-gradient(circle at top, #ffecd2, #fcb69f, #f83600);
+      color: #222;
+      max-width: 500px;
+      margin: auto;
+      min-height: 100vh;
+      padding: 0 0 30px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.4);
+      border-radius: 0 0 20px 20px;
+      overflow-x: hidden;
+    }
+    .header {
+      position: sticky;
+      top: 0;
+      background: linear-gradient(90deg, #ff3b30, #ff9500);
+      display: flex;
+      align-items: center;
+      padding: 10px 15px;
+      color: #fff;
+      z-index: 100;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.4);
+    }
+    .back-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      border: none;
+      background: rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+      cursor: pointer;
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      transition: all 0.2s;
+    }
+    .back-btn:hover { transform: scale(1.05); }
+    .header-title {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    main { padding: 20px 16px 10px; }
+    .card {
+      background: rgba(255,255,255,0.95);
+      border-radius: 18px;
+      padding: 18px 16px 20px;
+      box-shadow: 0 14px 30px rgba(0,0,0,0.25);
+      backdrop-filter: blur(18px);
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .card-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #ff9500, #ff3b30);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      box-shadow: 0 8px 16px rgba(255,149,0,0.6);
+    }
+    .card-header h2 { margin: 0; font-size: 1.1rem; color: #222; }
+    .card-header p { margin: 2px 0 0; font-size: 0.8rem; color: #666; }
+    .form-group { margin-top: 12px; }
+    label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #444;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .input-wrapper { position: relative; }
+    .input-wrapper i {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-15px);
+      color: #ff9500;
+      font-size: 0.0rem;
+    }
+    input, textarea {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid rgba(0,0,0,0.08);
+      padding: 10px 0px 30px 13px;
+      font-size: 0.9rem;
+      outline: none;
+      background: rgba(248,249,252,0.98);
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.08);
+      transition: all 0.2s;
+    }
+    textarea { min-height: 60px; resize: vertical; padding-top: 8px; }
+    input:focus, textarea:focus {
+      border-color: #ff9500;
+      box-shadow: 0 0 0 2px rgba(255,149,0,0.25);
+      transform: translateY(-1px);
+    }
+    .hint {
+      font-size: 0.75rem;
+      color: #777;
+      margin-top: 2px;
+    }
+    .btn-next {
+      margin-top: 18px;
+      width: 100%;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 16px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(135deg, #ff3b30, #ff9500);
+      box-shadow: 0 10px 20px rgba(255,149,0,0.55);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.15s;
+    }
+    .btn-next:hover {
+      transform: translateY(-1px) scale(1.01);
+      box-shadow: 0 16px 26px rgba(255,149,0,0.6);
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <button class="back-btn" onclick="goBack()">
+      <i class="fa-solid fa-arrow-left"></i>
+    </button>
+    <div class="header-title">Étape 1 · Infos client</div>
+  </header>
+
+  <main>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">
+          <i class="fa-solid fa-user"></i>
+        </div>
+        <div>
+          <h2>Vos coordonnées</h2>
+          <p>Pour livrer rapidement votre commande Chitir.</p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="nom">Nom complet</label>
+        <div class="input-wrapper">
+          <i class="fa-solid fa-id-card"></i>
+          <input type="text" id="nom" placeholder="Ex : Jean KABORE">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Numéro de téléphone</label>
+        <div class="input-wrapper">
+          <i class="fa-solid fa-phone"></i>
+          <input type="tel" id="phone" placeholder="Ex : 77 33 74 58">
+        </div>
+        <div class="hint">Ce numéro sera utilisé par le livreur ou sur WhatsApp.</div>
+      </div>
+
+      <div class="form-group">
+        <label for="localisation">Localisation (quartier / repère)</label>
+        <div class="input-wrapper">
+          <i class="fa-solid fa-location-dot"></i>
+          <textarea id="localisation" placeholder="Ex : Ouaga, Kamsonghin, près de la station Total..."></textarea>
+        </div>
+      </div>
+
+      <button class="btn-next" onclick="goToStep2()">
+        Suivant
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
+    </div>
+  </main>
+
+  <script>
+    function goBack() {
+      window.location.href = "panier.html";
+    }
+
+    function goToStep2() {
+      const nom = document.getElementById("nom").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const localisation = document.getElementById("localisation").value.trim();
+
+      if (!nom || !phone || !localisation) {
+        alert("Merci de remplir toutes les informations.");
+        return;
+      }
+
+      localStorage.setItem("chitir_checkout_info", JSON.stringify({
+        nom, phone, localisation
+      }));
+
+      window.location.href = "choix-resto.html";
+    }
+  </script>
+</body>
+</html>

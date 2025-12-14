@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Chitir Chicken - Chicken Lover</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+/* --- Style global --- */
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background-color: aliceblue;
+  background-size: cover;
+  color: #fff;
+  overflow-x: hidden;
+  max-width: 480px;
+  margin: auto;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+}
+
+/* --- Barre du haut --- */
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  max-width: 480px;
+  background: linear-gradient(90deg, #ff3b30, #ff9500);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0px;
+  box-shadow: 0 4px 20px rgba(255,69,0,0.4);
+  border-radius: 0 0 20px 20px;
+  z-index: 1000;
+}
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.header-left img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(255,255,255,0.6);
+}
+.header-left h1 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-shadow: 1px 1px 6px rgba(0,0,0,0.4);
+}
+.search-bar {
+  flex: 1;
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  background: rgba(255,255,255,0.2);
+  border-radius: 20px;
+  padding: 5px 10px;
+}
+.search-bar input {
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #fff;
+  width: 100%;
+  font-size: 0.9rem;
+}
+.search-bar i {
+  color: white;
+  margin-right: 5px;
+}
+
+/* --- Surlignage recherche --- */
+.highlight {
+  background: yellow;
+  color: #000;
+  padding: 0 2px;
+  border-radius: 3px;
+}
+
+/* --- Contenu principal --- */
+.main {
+  margin-top: 95px;
+  margin-bottom: 120px;
+  padding: 10px;
+  text-align: center;
+}
+.main img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+  border-radius: 15px;
+  margin-bottom: 10px;
+}
+h1 {
+  font-size: 1.8rem;
+  color: orange;
+  text-shadow: 0 0 10px rgba(0,0,0,0.7);
+  margin-bottom: 10px;
+}
+.menu-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+.menu-item {
+  background: rgba(0,0,0,0.6);
+  border-radius: 15px;
+  padding: 15px;
+  width: 90%;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  transition: transform 0.3s ease;
+}
+.menu-item:hover {
+  transform: scale(1.03);
+}
+.menu-item h3 {
+  color: orange;
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+.menu-item p {
+  font-size: 0.9rem;
+}
+.icons {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.icons button {
+  background: linear-gradient(90deg, red, orange);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 15px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+.icons button:hover {
+  transform: scale(1.05);
+}
+
+/* --- Flèches rondes Font Awesome --- */
+.arrow-btn {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff3b30, #ff9500);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 22px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+.arrow-btn.left { left: 10px; }
+.arrow-btn.right { right: 10px; }
+.arrow-btn:hover { transform: translateY(-50%) scale(1.08); }
+
+/* --- Barre de navigation du bas (nouveau style) --- */
+.bottom-nav { 
+  position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); 
+  width: 100%; max-width: 480px; height: 85px;
+  background: rgba(255,255,255,0.98); backdrop-filter: blur(50px); 
+  display: flex; justify-content: space-around; align-items: center; 
+  padding: 0px 0px 0px; border-radius: 34px 34px 0 0; 
+  box-shadow: 0 25px 50px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.9), inset 0 1px 0 rgba(255,255,255,0.9);
+  z-index: 1000;
+}
+.bottom-nav a { 
+  color: #666; text-decoration: none; font-size: 10px; 
+  display: flex; flex-direction: column; align-items: center; 
+  position: relative; transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
+  flex: 1; padding: 12px 8px; border-radius: 20px; font-weight: 600; letter-spacing: 0.3px;
+}
+.bottom-nav a i { 
+  font-size: 30px; margin-bottom: 4px; 
+  display: flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; transition: all 0.3s ease;
+}
+.bottom-nav a:nth-child(1) i { color: #007AFF; }
+.bottom-nav a:nth-child(2) i { color: #FF3B30; }
+.bottom-nav a:nth-child(3) i { color: #FF375F; }
+.bottom-nav a:nth-child(4) i { color: #34C759; }
+.bottom-nav a:nth-child(5) i { color: #FF9500; }
+.bottom-nav a:nth-child(6) i { color: #FF9F0A; }
+.bottom-nav a.active { 
+  color: #ff9500 !important;
+  background: linear-gradient(135deg, rgba(255,149,0,0.15), rgba(255,59,48,0.15));
+  transform: translateY(-6px);
+  box-shadow: 0 15px 35px rgba(255,149,0,0.4), 0 0 20px rgba(255,149,0,0.2);
+}
+.bottom-nav a.active i {
+  background: linear-gradient(135deg, rgba(255,149,0,0.2), rgba(255,59,48,0.2));
+  border-radius: 12px; box-shadow: 0 6px 20px rgba(255,149,0,0.3); transform: scale(1.1);
+}
+.bottom-nav .counter { 
+  position: absolute; top: 8px; right: 12px; 
+  background: linear-gradient(135deg, #FF3B30, #D32F2F); color: #fff; 
+  border-radius: 12px; font-size: 11px; font-weight: 700; 
+  padding: 0px 2px; min-width: 20px; height: 20px;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 12px rgba(255,59,48,0.4); border: 1px solid rgba(255,255,255,0.3);
+}
+</style>
+</head>
+
+<body>
+<!-- Barre du haut -->
+<div class="header">
+  <div class="header-left">
+    <img src="images/logo.png" alt="Logo">
+    <h1>Chitir Chicken</h1>
+  </div>
+  <div class="search-bar">
+    <i class="fa fa-search"></i>
+    <input type="text" id="searchInput" placeholder="Rechercher un menu...">
+  </div>
+</div>
+
+<!-- Contenu principal -->
+<div class="main">
+  <img src="images/Chicken_lover.png" alt="Chicken Lover">
+  <h1>Chicken Lover</h1>
+  <div class="menu-container" id="menuContainer">
+
+    <div class="menu-item" data-name="OHA-YO MENU">
+      <h3 class="title">OHA-YO MENU</h3>
+      <p>1 Chitir burger, 2 Ailes de poulet épicées, 3 Hot bites, Salade de choux, Frite/Chips de pelure, Boisson — <strong>7 500 FCFA</strong></p>
+      <div class="icons">
+        <button onclick="ajouterAuxFavoris('OHA-YO MENU', 7500)">❤️ Favoris</button>
+        <button onclick="ajouterAuPanier('OHA-YO MENU', 7500)">🛒 Panier</button>
+      </div>
+    </div>
+
+    <div class="menu-item" data-name="TOKYO MENU">
+      <h3 class="title">TOKYO MENU</h3>
+      <p>1 Cuisse de poulet, 2 Ailes de poulet épicées, 1 Tender, 2 Hot bites, 1 Pain à l'ail, Frite/Chips de pelure, Boisson — <strong>7 000 FCFA</strong></p>
+      <div class="icons">
+        <button onclick="ajouterAuxFavoris('TOKYO MENU', 7000)">❤️ Favoris</button>
+        <button onclick="ajouterAuPanier('TOKYO MENU', 7000)">🛒 Panier</button>
+      </div>
+    </div>
+
+    <div class="menu-item" data-name="Ouagalais Menu">
+      <h3 class="title">Ouagalais Menu</h3>
+      <p>2 Hauts de cuisses épicées, 1 Tender, Frite/Chips de pelure, Boisson — <strong>4 500 FCFA</strong></p>
+      <div class="icons">
+        <button onclick="ajouterAuxFavoris('Ouagalais Menu', 4500)">❤️ Favoris</button>
+        <button onclick="ajouterAuPanier('Ouagalais Menu', 4500)">🛒 Panier</button>
+      </div>
+    </div>
+
+    <div class="menu-item" data-name="Tenders Menu-4pcs">
+      <h3 class="title">Tenders Menu-4pcs</h3>
+      <p>Servi avec frites/Chips de pelure + Boisson — <strong>5 000 FCFA</strong></p>
+      <div class="icons">
+        <button onclick="ajouterAuxFavoris('Tenders Menu-4pcs', 5000)">❤️ Favoris</button>
+        <button onclick="ajouterAuPanier('Tenders Menu-4pcs', 5000)">🛒 Panier</button>
+      </div>
+    </div>
+
+    <div class="menu-item" data-name="Tenders Menu-5pcs">
+      <h3 class="title">Tenders Menu-5pcs</h3>
+      <p>Servi avec Frite/Chips de pelure + Boisson — <strong>6 000 FCFA</strong></p>
+      <div class="icons">
+        <button onclick="ajouterAuxFavoris('Tenders Menu-5pcs', 6000)">❤️ Favoris</button>
+        <button onclick="ajouterAuPanier('Tenders Menu-5pcs', 6000)">🛒 Panier</button>
+      </div>
+    </div>
+
+    <div class="menu-item" data-name="Tenders Menu-7pcs">
+      <h3 class="title">Tenders Menu-7pcs</h3>
+      <p>Servi avec Frite/Chips de pelure + Boisson — <strong>7 000 FCFA</strong></p>
+      <div class="icons">
+        <button onclick="ajouterAuxFavoris('Tenders Menu-7pcs', 7000)">❤️ Favoris</button>
+        <button onclick="ajouterAuPanier('Tenders Menu-7pcs', 7000)">🛒 Panier</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Flèches améliorées -->
+<div class="arrow-btn left" onclick="navigateTo('burgers-wraps.html')">
+  <i class="fa-solid fa-circle-arrow-left"></i>
+</div>
+<div class="arrow-btn right" onclick="navigateTo('drinks-glaces.html')">
+  <i class="fa-solid fa-circle-arrow-right"></i>
+</div>
+
+<!-- Nouvelle barre de navigation bas -->
+<nav class="bottom-nav">
+  <a href="index.html">
+    <i class="fa-solid fa-house"></i><span>Accueil</span>
+  </a>
+  <a href="panier.html">
+    <i class="fa-solid fa-cart-shopping"></i><span>Panier</span>
+    <span id="cart-count" class="counter">0</span>
+  </a>
+  <a href="favoris.html">
+    <i class="fa-solid fa-heart"></i><span>Favoris</span>
+    <span id="fav-count" class="counter">0</span>
+  </a>
+  <a href="localisation.html">
+    <i class="fa-solid fa-location-dot"></i><span>Localisation</span>
+  </a>
+  <a href="boutique.html">
+    <i class="fa-solid fa-store"></i><span>Boutique</span>
+  </a>
+  <a href="bucket.html" class="active">
+    <i class="fa-solid fa-utensils"></i><span>Menus</span>
+  </a>
+</nav>
+
+<script>
+function navigateTo(url) {
+  window.location.href = url;
+}
+
+/* --- Recherche avec surlignage --- */
+const searchInput = document.getElementById("searchInput");
+const items = document.querySelectorAll(".menu-item");
+
+// sauvegarde des titres originaux
+items.forEach(item => {
+  const titleEl = item.querySelector("h3");
+  item.dataset.originalTitle = titleEl.textContent;
+});
+
+searchInput.addEventListener("input", () => {
+  const val = searchInput.value.trim().toLowerCase();
+
+  items.forEach(item => {
+    const titleEl = item.querySelector("h3");
+    const original = item.dataset.originalTitle;
+    if (!val) {
+      titleEl.innerHTML = original;
+      item.style.display = "block";
+      return;
+    }
+    if (original.toLowerCase().includes(val)) {
+      const regex = new RegExp(`(${val})`, "gi");
+      titleEl.innerHTML = original.replace(regex, '<span class="highlight">$1</span>');
+      item.style.display = "block";
+    } else {
+      item.style.display = "none";
+    }
+  });
+});
+
+/* --- Compteurs et favoris --- */
+function majCompteurs() {
+  const panier = JSON.parse(localStorage.getItem("panier") || "[]");
+  const favoris = JSON.parse(localStorage.getItem("favoris") || "[]");
+  const cart = document.getElementById("cart-count");
+  const fav = document.getElementById("fav-count");
+  if (cart) cart.textContent = panier.length;
+  if (fav) fav.textContent = favoris.length;
+}
+
+function ajouterAuPanier(nom, prix) {
+  let panier = JSON.parse(localStorage.getItem("panier") || "[]");
+  const produit = panier.find(p => p.nom === nom);
+  if (produit) produit.quantite += 1;
+  else panier.push({ nom, prix, quantite: 1 });
+  localStorage.setItem("panier", JSON.stringify(panier));
+  majCompteurs();
+  alert("✅ " + nom + " ajouté au panier !");
+}
+
+function ajouterAuxFavoris(nom, prix) {
+  let favoris = JSON.parse(localStorage.getItem("favoris") || "[]");
+  const existe = favoris.find(f => f.nom === nom);
+  if (!existe) {
+    favoris.push({ nom, prix });
+    localStorage.setItem("favoris", JSON.stringify(favoris));
+    majCompteurs();
+    alert("❤️ " + nom + " ajouté aux favoris !");
+  } else {
+    alert("⚠️ Ce produit est déjà dans vos favoris !");
+  }
+}
+
+function activerIcône() {
+  const path = window.location.pathname.split("/").pop();
+  document.querySelectorAll("nav a").forEach(a => {
+    const href = a.getAttribute("href");
+    const pagesMenu = ["bucket.html", "burgers-wraps.html", "chicken-lover.html"];
+    if (href === path || (pagesMenu.includes(path) && href === "bucket.html")) {
+      a.classList.add("active");
+    } else {
+      a.classList.remove("active");
+    }
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  majCompteurs();
+  activerIcône();
+});
+</script>
+</body>
+</html>

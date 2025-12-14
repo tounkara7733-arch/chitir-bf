@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Chitir - Publier Promos</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+body { 
+  font-family: -apple-system, sans-serif; 
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  margin: 0; padding: 40px; min-height: 100vh;
+}
+.admin-panel {
+  max-width: 800px; margin: 0 auto; background: white; 
+  border-radius: 25px; padding: 40px; box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+}
+.logo { text-align: center; margin-bottom: 30px; }
+.logo i { font-size: 64px; color: #ff9500; }
+h1 { color: #333; text-align: center; font-size: 32px; margin-bottom: 10px; }
+.subtitle { color: #666; text-align: center; font-size: 18px; margin-bottom: 40px; }
+.form-group { margin-bottom: 25px; }
+label { display: block; margin-bottom: 8px; font-weight: 600; color: #333; }
+input, textarea { 
+  width: 100%; padding: 15px; border: 2px solid #f0f0f0; 
+  border-radius: 15px; font-size: 16px; box-sizing: border-box;
+  transition: border-color 0.3s;
+}
+input:focus, textarea:focus { outline: none; border-color: #ff9500; box-shadow: 0 0 0 3px rgba(255,149,0,0.1); }
+textarea { height: 120px; resize: vertical; }
+.publish-btn { 
+  width: 100%; padding: 20px; background: linear-gradient(135deg, #ff9500, #ff3b30);
+  color: white; border: none; border-radius: 20px; font-size: 20px; font-weight: 700;
+  cursor: pointer; transition: all 0.3s;
+}
+.publish-btn:hover { transform: scale(1.02); box-shadow: 0 15px 35px rgba(255,149,0,0.4); }
+.promos-list { margin-top: 40px; }
+.promo-item { 
+  background: linear-gradient(135deg, #fff7ec, #ffecd2); padding: 20px; 
+  border-radius: 15px; margin-bottom: 15px; border-left: 5px solid #ff9500;
+}
+.promo-item img { max-width: 100px; height: 100px; object-fit: cover; border-radius: 10px; float: right; }
+.status { padding: 10px 20px; border-radius: 25px; font-weight: 600; margin-top: 20px; }
+.success { background: #d4edda; color: #155724; }
+</style>
+</head>
+<body>
+<div class="admin-panel">
+  <div class="logo">
+    <i class="fa-solid fa-chicken"></i>
+    <h1>Admin Chitir Chicken</h1>
+    <p class="subtitle">Publiez des promos - Tous les clients verront !</p>
+  </div>
+
+  <form id="promoForm">
+    <div class="form-group">
+      <label><i class="fa-solid fa-heading"></i> Titre de la Promo</label>
+      <input type="text" id="promoTitre" placeholder="ex: 🍗 20% OFF Menu Chicken" required>
+    </div>
+    
+    <div class="form-group">
+      <label><i class="fa-solid fa-align-left"></i> Description</label>
+      <textarea id="promoDesc" placeholder="Menu complet 2000 FCFA au lieu de 2500 ! Valable aujourd'hui seulement !" required></textarea>
+    </div>
+    
+    <div class="form-group">
+      <label><i class="fa-solid fa-image"></i> URL Image (optionnel)</label>
+      <input type="url" id="promoImage" placeholder="https://example.com/promo-chicken.jpg">
+      <small>Ou laissez vide pour sans image</small>
+    </div>
+    
+    <button type="submit" class="publish-btn">
+      <i class="fa-solid fa-bullhorn"></i> PUBLIER PROMO MAINTENANT !
+    </button>
+  </form>
+
+  <div id="status" class="status" style="display:none;"></div>
+  
+  <div class="promos-list">
+    <h3 style="color:#ff9500; margin-bottom:20px;"><i class="fa-solid fa-list"></i> Promos Récentes</h3>
+    <div id="recentPromos"></div>
+  </div>
+</div>
+
+<script>
+let promotions = JSON.parse(localStorage.getItem("promotions") || "[]");
+
+document.getElementById('promoForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  const titre = document.getElementById('promoTitre').value;
+  const desc = document.getElementById('promoDesc').value;
+  const image = document.getElementById('promoImage').value;
+  
+  // ✅ PUBLICATION IDENTIQUE aux clients
+  const promo = {
+    id: 'promo_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+    titre, desc, image,
+    date: new Date().toISOString(),
+    read: false
+  };
+  
+  promotions.unshift(promo);
+  localStorage.setItem("promotions", JSON.stringify(promotions));
+  
+  // ✅ CONFIRMATION
+  showStatus(`✅ PROMO "${titre}" PUBLIÉE !<br>Tous les clients verront la notification ! 🚀`, 'success');
+  
+  // Reset form
+  document.getElementById('promoForm').reset();
+  loadRecentPromos();
+});
+
+function showStatus(message, type) {
+  const status = document.getElementById('status');
+  status.innerHTML = message;
+  status.className = `status ${type}`;
+  status.style.display = 'block';
+  setTimeout(() => status.style.display = 'none', 5000);
+}
+
+function loadRecentPromos() {
+  const list = document.getElementById('recentPromos');
+  list.innerHTML = promotions.slice(0, 5).map(promo => `
+    <div class="promo-item">
+      <div>
+        <strong style="color:#ff9500; font-size:18px;">${promo.titre}</strong><br>
+        <small>${promo.desc}</small><br>
+        <span style="color:#666; font-size:12px;">${new Date(promo.date).toLocaleString('fr')}</span>
+      </div>
+      ${promo.image ? `<img src="${promo.image}" alt="Promo">` : ''}
+    </div>
+  `).join('');
+}
+
+loadRecentPromos();
+</script>
+</body>
+</html>
